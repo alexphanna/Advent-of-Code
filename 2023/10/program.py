@@ -8,30 +8,22 @@ def main():
             if lines[i][j] == "S":
                 start = [i, j]
 
-    print("start:", start)
-
     distance = 0
-    prev_position = start
-    position = [start[0], start[1] - 1]
-    while distance < 50:
-        print("pos:", position, "prev:", prev_position)
+    prev_position = [start[0], start[1]]
+    position = [start[0] - 1, start[1]]
+    while True:
+        distance += 1
         temp = [position[0], position[1]]
         pipe = lines[position[0]][position[1]]
         if pipe == "|":
-            if position[1] < prev_position[1]:
-                position[1] -= 1
-            elif position[1] > prev_position[1]:
-                position[1] += 1
+            position[0] += position[0] - prev_position[0]
         elif pipe == "-":
-            if position[0] < prev_position[0]:
-                position[0] -= 1
-            elif position[0] > prev_position[0]:
-                position[0] += 1
+            position[1] += position[1] - prev_position[1]
         elif pipe == "L":
             if position[0] == prev_position[0]:
-                position[0] += 1
+                position[0] -= 1
             elif position[1] == prev_position[1]:
-                position[1] -= 1
+                position[1] += 1
         elif pipe == "J":
             if position[0] == prev_position[0]:
                 position[0] -= 1
@@ -39,16 +31,18 @@ def main():
                 position[1] -= 1
         elif pipe == "7":
             if position[1] == prev_position[1]:
-                position[1] += 1
+                position[1] -= 1
             elif position[0] == prev_position[0]:
-                position[0] -= 1
+                position[0] += 1
         elif pipe == "F":
             if position[0] == prev_position[0]:
                 position[0] += 1
             elif position[1] == prev_position[1]:
                 position[1] += 1
+        elif pipe == "S":
+            break
         prev_position = temp
-        distance += 1
+    print(distance // 2)
         
 
 
