@@ -14,9 +14,9 @@ def get_diagonals(word_search):
         diagonals.append(diagonal)
     return diagonals
 
-def main():
+def part_one():
     file = open("input.txt", "r")
-    lines = list(line.replace('\n', '') for line in file.readlines())
+    lines = list(line for line in file.read().split("\n"))
 
     parts = []
     parts.extend(lines) # horizontal
@@ -28,7 +28,25 @@ def main():
     for part in parts:
         count += part.count("XMAS") + part.count("SAMX")
     print(count)
+
+def is_x(word_search, i, j):
+    word1 = word_search[i][j] + word_search[i + 1][j + 1] + word_search[i + 2][j + 2]
+    word2 = word_search[i][j + 2] + word_search[i + 1][j + 1] + word_search[i + 2][j]
+
+    return (word1 == "MAS" or word1 == "SAM") and (word2 == "MAS" or word2 == "SAM")
+
+def part_two():
+    file = open("input.txt", "r")
+    lines = list(line for line in file.read().split("\n"))
+
+    count = 0
+    for i in range(len(lines) - 2):
+        for j in range(len(lines[i]) - 2):
+            if is_x(lines, i, j):
+                count += 1
+    print(count)
+
         
 
 if __name__ == "__main__":
-    main()
+    part_two()
